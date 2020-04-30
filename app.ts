@@ -1,14 +1,27 @@
-function add(n1: number, n2: number, printResult: boolean, phrase: string) {
-  if (printResult) {
-    console.log(phrase + (n1 + n2));
-  } else {
-    return n1 + n2;
-  }
-}
+// more specific but not necessary (for tuples it is):
+const person: {
+  name: string;
+  age: number;
+  hobbies: string[];  // array of strings
+  role: [number, string];  // tuple type
+} = {
+  name: "Julia",
+  age: 26,
+  hobbies: ["yoga", "programming"],
+  role: [4, "front-end developer"],
+};
 
-const number1 = 5;
-const number2 = 2.8;
-const printResult = true;
-const phrase = "the result is: ";
+// also works:
+// const person = {
+//   name: "Julia",
+//   age: 26,
+//   hobbies: ["yoga", "programming"]
+// };
 
-add(number1, number2, printResult, phrase);
+let favActivities: string[];
+favActivities = ["yoga", "books"];
+
+let mixedArray: any[];
+mixedArray = ["Julia", 26, true];
+
+console.log(person.name);
