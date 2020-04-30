@@ -1,13 +1,14 @@
-function combine(input1, input2, resultConversion) {
-    var result;
-    if (typeof input1 === "number" && typeof input2 === "number" || resultConversion === "as-number") {
-        result = +input1 + +input2;
-    }
-    else {
-        result = input1.toString() + input2.toString();
-    }
-    return result;
+function add(n1, n2) {
+    return n1 + n2;
 }
-console.log(combine(30, 4, "as-number"));
-console.log(combine("48", "20", "as-number"));
-console.log(combine("Julia", " is cool", "as-text"));
+function printResult(num) {
+    console.log("Result is: " + num);
+}
+function addAndHandle(n1, n2, callback) {
+    var result = n1 + n2;
+    callback(result);
+}
+printResult(add(8, 10));
+var combineValues;
+combineValues = add;
+addAndHandle(12, 3, function (result) { return console.log(result); });
