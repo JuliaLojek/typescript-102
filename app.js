@@ -1,34 +1,12 @@
-// more specific but not necessary (for tuples it is):
-// const person: {
-//   name: string;
-//   age: number;
-//   hobbies: string[];  // array of strings
-//   role: [number, string];  // tuple type
-// } = {
-//   name: "Julia",
-//   age: 26,
-//   hobbies: ["yoga", "programming"],
-//   role: [4, "front-end developer"],
-// };
-var Role;
-(function (Role) {
-    Role[Role["ADMIN"] = 0] = "ADMIN";
-    Role[Role["READ_ONLY"] = 1] = "READ_ONLY";
-    Role[Role["AUTHOR"] = 2] = "AUTHOR";
-})(Role || (Role = {}));
-;
-// also works:
-var person = {
-    name: "Julia",
-    age: 26,
-    hobbies: ["yoga", "programming"],
-    role: Role.AUTHOR
-};
-var favActivities;
-favActivities = ["yoga", "books"];
-var mixedArray;
-mixedArray = ["Julia", 26, true];
-console.log(person.name);
-if (person.role === Role.AUTHOR) {
-    console.log("is author");
+function combine(input1, input2) {
+    var result;
+    if (typeof input1 === "number" && typeof input2 === "number") {
+        result = input1 + input2;
+    }
+    else {
+        result = input1.toString() + input2.toString();
+    }
+    return result;
 }
+console.log(combine(30, 4));
+console.log(combine("Julia", " is cool"));
