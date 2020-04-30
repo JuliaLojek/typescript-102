@@ -10,25 +10,24 @@
 //   hobbies: ["yoga", "programming"],
 //   role: [4, "front-end developer"],
 // };
-var Role;
-(function (Role) {
-    Role[Role["ADMIN"] = 0] = "ADMIN";
-    Role[Role["READ_ONLY"] = 1] = "READ_ONLY";
-    Role[Role["AUTHOR"] = 2] = "AUTHOR";
-})(Role || (Role = {}));
-;
+
+enum Role { ADMIN = 4, READ_ONLY = 101, AUTHOR };
+
 // also works:
-var person = {
-    name: "Julia",
-    age: 26,
-    hobbies: ["yoga", "programming"],
-    role: Role.AUTHOR
+const person = {
+  name: "Julia",
+  age: 26,
+  hobbies: ["yoga", "programming"],
+  role: Role.AUTHOR,
 };
-var favActivities;
+
+let favActivities: string[];
 favActivities = ["yoga", "books"];
-var mixedArray;
+
+let mixedArray: any[];
 mixedArray = ["Julia", 26, true];
+
 console.log(person.name);
 if (person.role === Role.AUTHOR) {
-    console.log("is author");
+  console.log("is author");
 }
