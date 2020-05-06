@@ -1,87 +1,29 @@
-class Department {
-  // private readonly id: string;
-  // private name: string;
-  protected employees: string[] = [];
-  static fiscalYear = 2020;
+// type Person = {
+//   name: string;
+//   age: number;
+//   greet(phrase: string): void;
+// }
 
-  constructor(private readonly id: string, public name: string) {
-    // shorthand for creating properties, public keyword here is necessary to create a field inside the class
-    // this.name = name;
-    console.log(Department.fiscalYear);
+// types and interfaces can sometimes be used interchangeably
+
+interface Greetable {  // preferably with a capital letter
+  name: string;
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable {
+  constructor(name: string) {
+    this.name = name;
   }
-  static createEmployee(name: string) {
-    // static method called directly on a class
-    return { name: name };
-  }
-  describe(this: Department) {
-    // "this" has to be an instance of the Department class
-    console.log("Department #" + this.id + ": " + this.name);
-  }
-  addEmployee(emplyee: string) {
-    this.employees.push(emplyee);
-  }
-  printEmployeeInformation() {
-    console.log(this.employees.length);
-    console.log(this.employees);
+  name: string;
+  age = 26;
+  greet(phrase: string) {
+    console.log(phrase + " " + this.name);
   }
 }
 
-class ITDepartment extends Department {
-  constructor(id: string, public admins: string[]) {
-    super(id, "IT");
-    this.admins = admins;
-  }
-}
+let user1: Greetable;
 
-class AccountingDepartment extends Department {
-  private lastReport: string;
+user1 = new Person("Julia");
 
-  get mostRecentReport() {
-    // getter method - access to private values
-    if (this.lastReport) {
-      return this.lastReport;
-    }
-    throw new Error("No report found");
-  }
-
-  set mostRecentReport(value: string) {
-    // setter method
-    this.addReport(value);
-  }
-
-  constructor(id: string, private reports: string[]) {
-    super(id, "Accounting");
-    this.reports = reports;
-    this.lastReport = reports[0];
-  }
-  addEmployee(name: string) {
-    if (name === "Max") {
-      return;
-    }
-    this.employees.push(name);
-  }
-  addReport(text: string) {
-    this.reports.push(text);
-    this.lastReport = text;
-  }
-  printReports() {
-    console.log(this.reports);
-  }
-}
-
-const employee1 = Department.createEmployee("Franklin"); // accessing a static method directly on a class without the 'new' word
-console.log(employee1, Department.fiscalYear);
-
-const accounting = new AccountingDepartment("101", []);
-accounting.addReport("Something went wrong");
-console.log(accounting.mostRecentReport); //  accessing a private field through getter method
-accounting.mostRecentReport = "2020 report"; //  setting a private field through setter method
-const it = new ITDepartment("201", ["Kevin", "Mark", "Daisy"]);
-
-accounting.describe();
-accounting.addEmployee("Max");
-accounting.addEmployee("Julia");
-accounting.printEmployeeInformation();
-accounting.printReports();
-
-it.describe();
+user1.greet("Hi, I'm");
