@@ -21,7 +21,12 @@ var Department = /** @class */ (function () {
         this.employees = [];
         // shorthand for creating properties, public keyword here is necessary to create a field inside the class
         // this.name = name;
+        console.log(Department.fiscalYear);
     }
+    Department.createEmployee = function (name) {
+        // static method called directly on a class
+        return { name: name };
+    };
     Department.prototype.describe = function () {
         // "this" has to be an instance of the Department class
         console.log("Department #" + this.id + ": " + this.name);
@@ -33,6 +38,7 @@ var Department = /** @class */ (function () {
         console.log(this.employees.length);
         console.log(this.employees);
     };
+    Department.fiscalYear = 2020;
     return Department;
 }());
 var ITDepartment = /** @class */ (function (_super) {
@@ -56,12 +62,14 @@ var AccountingDepartment = /** @class */ (function (_super) {
     }
     Object.defineProperty(AccountingDepartment.prototype, "mostRecentReport", {
         get: function () {
+            // getter method - access to private values
             if (this.lastReport) {
                 return this.lastReport;
             }
             throw new Error("No report found");
         },
         set: function (value) {
+            // setter method
             this.addReport(value);
         },
         enumerable: true,
@@ -82,6 +90,8 @@ var AccountingDepartment = /** @class */ (function (_super) {
     };
     return AccountingDepartment;
 }(Department));
+var employee1 = Department.createEmployee("Franklin"); // accessing a static method directly on a class without the 'new' word
+console.log(employee1, Department.fiscalYear);
 var accounting = new AccountingDepartment("101", []);
 accounting.addReport("Something went wrong");
 console.log(accounting.mostRecentReport); //  accessing a private field through getter method
