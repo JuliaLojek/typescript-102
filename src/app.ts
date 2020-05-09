@@ -10,10 +10,12 @@
 
 interface Named { // interface!! - preferably with a capital letter
   readonly name: string;
+  outputName?: string;  // optional property - also possible in classes and in parameters passed to constructor
 }
 
 interface Greetable extends Named {  // we can extend interfaces (with more than one interface - with comas)
   greet(phrase: string): void;
+  greet2?(phrase: string): void;  // optional method
 }
 
 class Person implements Greetable {
