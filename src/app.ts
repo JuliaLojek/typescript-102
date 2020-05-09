@@ -6,8 +6,11 @@
 
 // types and interfaces can sometimes be used interchangeably
 
-interface Greetable {  // preferably with a capital letter
-  name: string;
+interface Named { // preferably with a capital letter
+  readonly name: string;
+}
+
+interface Greetable extends Named {  // we can extend interfaces (with more than one interface - with comas)
   greet(phrase: string): void;
 }
 
