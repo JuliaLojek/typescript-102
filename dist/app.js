@@ -108,4 +108,10 @@ var fetchedUserData = {
     },
 };
 console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title); // allows to check if that propert exists and if it does go deeper; it;s similar to JS chaining: fetchedUserData && job && title
+//////////  nullish coalescing - when you want to check if a value is a null or an undefined
+var input = 0;
+var storedData = input || "default"; // this option rejects every falsy value, also an empty string or a zero
+var storedData2 = input !== null && input !== void 0 ? input : "default"; // this option only rejects null or undefined
+console.log(storedData);
+console.log(storedData2);
 //# sourceMappingURL=app.js.map
