@@ -72,4 +72,7 @@ var parrot = {
     flyingSpeed: 200,
 };
 moveAnimal(parrot);
+/////////  type casting
+var userInput = document.querySelector("#userName"); // ! means: TS, don't worry, this element exists
+userInput.value = "Hi there!";
 //# sourceMappingURL=app.js.map

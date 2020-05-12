@@ -114,3 +114,9 @@ const parrot: Bird = {
 }
 
 moveAnimal(parrot);
+
+/////////  type casting
+
+const userInput = <HTMLInputElement>document.querySelector("#userName")!;  // ! means: TS, don't worry, this element exists
+
+userInput.value = "Hi there!";
