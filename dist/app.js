@@ -22,6 +22,16 @@ function add(a, b) {
     }
     return a + b; // this runs only when none of them is a string
 }
+var result = add(4, 6); // result is of type Combinable so you can't use either number nor string methods on it...
+var result2 = add("julia", "lojek"); // now it is said to be treated as a string and the methods work
+function add2(a, b) {
+    if (typeof a === "string" || typeof b === "string") {
+        return a.toString() + b.toString();
+    }
+    return a + b;
+}
+var result3 = add2(4, 6); // now due to function overload it is a number type
+var result4 = add2("julia", "lojek"); // same
 ////////  type guards
 var Car = /** @class */ (function () {
     function Car() {

@@ -46,6 +46,23 @@ function add(a: Combinable, b: Combinable) {
   return a + b; // this runs only when none of them is a string
 }
 
+const result = add(4, 6);  // result is of type Combinable so you can't use either number nor string methods on it...
+const result2 = add("julia", "lojek") as string;  // now it is said to be treated as a string and the methods work
+
+////// function overloads
+
+function add2(a: number, b: number): number;  // in a situation with this arguments give me that result type
+function add2(a: string, b: string): string;  // same
+function add2(a: Combinable, b: Combinable) {
+  if (typeof a === "string" || typeof b === "string") {
+    return a.toString() + b.toString();
+  }
+  return a + b;
+}
+
+const result3 = add2(4, 6); // now due to function overload it is a number type
+const result4 = add2("julia", "lojek"); // same
+
 ////////  type guards
 
 class Car {
