@@ -117,6 +117,25 @@ moveAnimal(parrot);
 
 /////////  type casting
 
-const userInput = <HTMLInputElement>document.querySelector("#userName")!;  // ! means: TS, don't worry, this element exists
+// const userInput = <HTMLInputElement>document.querySelector("#userName")!;  // ! means: TS, don't worry, this element exists
+const userInput = document.querySelector("#userName")! as HTMLInputElement;   // the same as above
 
 userInput.value = "Hi there!";
+
+const anotherInput = document.querySelector("#something");  // if we aren't sure id such an element exists in DOM
+if (anotherInput) {
+  (anotherInput as HTMLInputElement).value = "Hello";
+}
+
+/////////  index properties
+
+interface ErrorContainer {
+  id: string;  // we can set some predefined properties but of the same type as defined below
+  [prop: string]: string;  // we can create object with the random number of properties of these type
+}
+
+const errorBag: ErrorContainer = {
+  id: "1",
+  email: "Not a valid email!",
+  username: "Not a valid username!",
+}

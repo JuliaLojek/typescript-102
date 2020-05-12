@@ -73,6 +73,16 @@ var parrot = {
 };
 moveAnimal(parrot);
 /////////  type casting
-var userInput = document.querySelector("#userName"); // ! means: TS, don't worry, this element exists
+// const userInput = <HTMLInputElement>document.querySelector("#userName")!;  // ! means: TS, don't worry, this element exists
+var userInput = document.querySelector("#userName"); // the same as above
 userInput.value = "Hi there!";
+var anotherInput = document.querySelector("#something"); // if we aren't sure id such an element exists in DOM
+if (anotherInput) {
+    anotherInput.value = "Hello";
+}
+var errorBag = {
+    id: "1",
+    email: "Not a valid email!",
+    username: "Not a valid username!",
+};
 //# sourceMappingURL=app.js.map
