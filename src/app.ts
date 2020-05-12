@@ -23,7 +23,8 @@ type UnknownEmployee = Admin | Employee;
 
 function printEployeeInfo(emp: UnknownEmployee) {
   console.log("Name: " + emp.name);
-  if ("privileges" in emp) {                   // type guard for object union types
+  if ("privileges" in emp) {
+    // type guard for object union types
     console.log("Privileges: " + emp.privileges);
   }
   if ("startDate" in emp) {
@@ -46,13 +47,13 @@ function add(a: Combinable, b: Combinable) {
   return a + b; // this runs only when none of them is a string
 }
 
-const result = add(4, 6);  // result is of type Combinable so you can't use either number nor string methods on it...
-const result2 = add("julia", "lojek") as string;  // now it is said to be treated as a string and the methods work
+const result = add(4, 6); // result is of type Combinable so you can't use either number nor string methods on it...
+const result2 = add("julia", "lojek") as string; // now it is said to be treated as a string and the methods work
 
 ////// function overloads
 
-function add2(a: number, b: number): number;  // in a situation with this arguments give me that result type
-function add2(a: string, b: string): string;  // same
+function add2(a: number, b: number): number; // in a situation with this arguments give me that result type
+function add2(a: string, b: string): string; // same
 function add2(a: Combinable, b: Combinable) {
   if (typeof a === "string" || typeof b === "string") {
     return a.toString() + b.toString();
@@ -90,7 +91,8 @@ function useVehicle(vehicle: Vehicle) {
   // if ("loadCargo" in vehicle) {   // TS type guard
   //   vehicle.loadCargo(1000);
   // }
-  if (vehicle instanceof Truck) {    // JS feature
+  if (vehicle instanceof Truck) {
+    // JS feature
     vehicle.loadCargo(2000);
   }
 }
@@ -128,18 +130,18 @@ function moveAnimal(animal: Animal) {
 const parrot: Bird = {
   type: "bird",
   flyingSpeed: 200,
-}
+};
 
 moveAnimal(parrot);
 
 /////////  type casting
 
 // const userInput = <HTMLInputElement>document.querySelector("#userName")!;  // ! means: TS, don't worry, this element exists
-const userInput = document.querySelector("#userName")! as HTMLInputElement;   // the same as above
+const userInput = document.querySelector("#userName")! as HTMLInputElement; // the same as above
 
 userInput.value = "Hi there!";
 
-const anotherInput = document.querySelector("#something");  // if we aren't sure id such an element exists in DOM
+const anotherInput = document.querySelector("#something"); // if we aren't sure id such an element exists in DOM
 if (anotherInput) {
   (anotherInput as HTMLInputElement).value = "Hello";
 }
@@ -147,12 +149,25 @@ if (anotherInput) {
 /////////  index properties
 
 interface ErrorContainer {
-  id: string;  // we can set some predefined properties but of the same type as defined below
-  [prop: string]: string;  // we can create object with the random number of properties of these type
+  id: string; // we can set some predefined properties but of the same type as defined below
+  [prop: string]: string; // we can create object with the random number of properties of these type
 }
 
 const errorBag: ErrorContainer = {
   id: "1",
   email: "Not a valid email!",
   username: "Not a valid username!",
-}
+};
+
+//////////  optional chaining
+
+const fetchedUserData = {
+  id: "u1",
+  name: "julia",
+  job: {
+    title: "developer",
+    description: "awesome person",
+  },
+};
+
+console.log(fetchedUserData?.job?.title); // allows to check if that propert exists and if it does go deeper; it;s similar to JS chaining: fetchedUserData && job && title

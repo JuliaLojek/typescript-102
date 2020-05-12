@@ -1,5 +1,6 @@
 "use strict";
 //////////  intersection - object types (combination)
+var _a;
 var e1 = {
     // it has all properties and methods of all added object types
     name: "Julia",
@@ -8,7 +9,8 @@ var e1 = {
 };
 function printEployeeInfo(emp) {
     console.log("Name: " + emp.name);
-    if ("privileges" in emp) { // type guard for object union types
+    if ("privileges" in emp) {
+        // type guard for object union types
         console.log("Privileges: " + emp.privileges);
     }
     if ("startDate" in emp) {
@@ -59,7 +61,8 @@ function useVehicle(vehicle) {
     // if ("loadCargo" in vehicle) {   // TS type guard
     //   vehicle.loadCargo(1000);
     // }
-    if (vehicle instanceof Truck) { // JS feature
+    if (vehicle instanceof Truck) {
+        // JS feature
         vehicle.loadCargo(2000);
     }
 }
@@ -95,4 +98,14 @@ var errorBag = {
     email: "Not a valid email!",
     username: "Not a valid username!",
 };
+//////////  optional chaining
+var fetchedUserData = {
+    id: "u1",
+    name: "julia",
+    job: {
+        title: "developer",
+        description: "awesome person",
+    },
+};
+console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title); // allows to check if that propert exists and if it does go deeper; it;s similar to JS chaining: fetchedUserData && job && title
 //# sourceMappingURL=app.js.map
