@@ -1,20 +1,75 @@
 "use strict";
-// type Person = {
-//   name: string;
-//   age: number;
-//   greet(phrase: string): void;
-// }
-var Person = /** @class */ (function () {
-    function Person(name) {
-        this.age = 26;
-        this.name = name;
+//////////  intersection - object types (combination)
+var e1 = {
+    // it has all properties and methods of all added object types
+    name: "Julia",
+    privileges: ["work"],
+    startDate: new Date(),
+};
+function printEployeeInfo(emp) {
+    console.log("Name: " + emp.name);
+    if ("privileges" in emp) { // type guard for object union types
+        console.log("Privileges: " + emp.privileges);
     }
-    Person.prototype.greet = function (phrase) {
-        console.log(phrase + " " + this.name);
+    if ("startDate" in emp) {
+        console.log("Start Date: " + emp.startDate);
+    }
+}
+printEployeeInfo(e1);
+function add(a, b) {
+    if (typeof a === "string" || typeof b === "string") {
+        return a.toString() + b.toString(); //  this structure is a type guard
+    }
+    return a + b; // this runs only when none of them is a string
+}
+////////  type guards
+var Car = /** @class */ (function () {
+    function Car() {
+    }
+    Car.prototype.drive = function () {
+        console.log("driving");
     };
-    return Person;
+    return Car;
 }());
-var user1;
-user1 = new Person("Julia");
-user1.greet("Hi, I'm");
+var Truck = /** @class */ (function () {
+    function Truck() {
+    }
+    Truck.prototype.drive = function () {
+        console.log("driving a truck...");
+    };
+    Truck.prototype.loadCargo = function (num) {
+        console.log("loading cargo..." + num);
+    };
+    return Truck;
+}());
+var v1 = new Car();
+var v2 = new Truck();
+function useVehicle(vehicle) {
+    vehicle.drive();
+    // if ("loadCargo" in vehicle) {   // TS type guard
+    //   vehicle.loadCargo(1000);
+    // }
+    if (vehicle instanceof Truck) { // JS feature
+        vehicle.loadCargo(2000);
+    }
+}
+useVehicle(v1);
+useVehicle(v2);
+function moveAnimal(animal) {
+    var speed;
+    switch (animal.type) {
+        case "bird":
+            speed = animal.flyingSpeed;
+            break;
+        case "horse":
+            speed = animal.runningSpeed;
+            break;
+    }
+    console.log("The animal is moving with the speed of " + speed + " m/s");
+}
+var parrot = {
+    type: "bird",
+    flyingSpeed: 200,
+};
+moveAnimal(parrot);
 //# sourceMappingURL=app.js.map
