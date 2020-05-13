@@ -23,17 +23,47 @@ function merge(objA: object, objB: object) {
 
 // this is why we use generics:
 
-function merge2<T, U>(objA: T, objB: U) {   // ts understands that this function returns T & U type
+function merge2<T, U>(objA: T, objB: U) {
+  // ts understands that this function returns T & U type
   return Object.assign(objA, objB);
 }
 
-const mergedObj2 = merge2({name: "julia"}, {age: 26});
-const age2 = mergedObj2.age;    // now it works
+const mergedObj2 = merge2({ name: "julia" }, { age: 26 });
+const age2 = mergedObj2.age; // now it works
 console.log(age2);
 
 ///////// generic constraints
 
-function merge3<T extends object, U extends object>(objA: T, objB: U) {  // both types T and U must be objects
+function merge3<T extends object, U extends object>(objA: T, objB: U) {
+  // both types T and U must be objects
   return Object.assign(objA, objB);
 }
 
+///////// more generic functions
+
+interface Lengthy {
+  length: number;
+}
+
+function countAndDescribe<T extends Lengthy>(el: T): [T, string] {
+  let description = "no value";
+  if (el.length > 0) {
+    description = `Input has ${el.length} elements`;
+  }
+  return [el, description];
+}
+
+console.log(countAndDescribe("hello stranger")); // it works with a string because under the hood everything is an object plus every string has a length property
+console.log(countAndDescribe([482309, 4394]));
+console.log(countAndDescribe({ name: "julia", surname: "lojek", length: 329 }));
+
+//////// keyof
+
+function extractAndConvert<T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) {
+  return obj[key];
+}
+
+console.log(extractAndConvert({ name: "julia" }, "name"));

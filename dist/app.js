@@ -17,6 +17,7 @@ function merge(objA, objB) {
 // const age = mergedObj.age;    // it's impossible here
 // this is why we use generics:
 function merge2(objA, objB) {
+    // ts understands that this function returns T & U type
     return Object.assign(objA, objB);
 }
 const mergedObj2 = merge2({ name: "julia" }, { age: 26 });
@@ -24,6 +25,22 @@ const age2 = mergedObj2.age; // now it works
 console.log(age2);
 ///////// generic constraints
 function merge3(objA, objB) {
+    // both types T and U must be objects
     return Object.assign(objA, objB);
 }
+function countAndDescribe(el) {
+    let description = "no value";
+    if (el.length > 0) {
+        description = `Input has ${el.length} elements`;
+    }
+    return [el, description];
+}
+console.log(countAndDescribe("hello stranger")); // it works with a string because under the hood everything is an object plus every string has a length property
+console.log(countAndDescribe([482309, 4394]));
+console.log(countAndDescribe({ name: "julia", surname: "lojek", length: 329 }));
+//////// keyof
+function extractAndConvert(obj, key) {
+    return obj[key];
+}
+console.log(extractAndConvert({ name: "julia" }, "name"));
 //# sourceMappingURL=app.js.map
