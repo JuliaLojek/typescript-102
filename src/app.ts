@@ -70,7 +70,8 @@ console.log(extractAndConvert({ name: "julia" }, "name"));
 
 //////// GENERIC CLASSES
 
-class DataStorage<T extends string | number | boolean> {   // we just say here we want one type of data and we specify it while creating instances
+class DataStorage<T extends string | number | boolean> {
+  // we just say here we want one type of data and we specify it while creating instances
   private data: T[] = [];
 
   addItem(item: T) {
@@ -78,7 +79,7 @@ class DataStorage<T extends string | number | boolean> {   // we just say here w
   }
 
   removeItem(item: T) {
-    this.data.splice(this.data.indexOf(item), 1);  // won't work with removing objects (reference)
+    this.data.splice(this.data.indexOf(item), 1); // won't work with removing objects (reference)
   }
 
   getItems() {
@@ -97,3 +98,29 @@ numberStorage.addItem(329);
 numberStorage.addItem(423849);
 numberStorage.removeItem(329);
 console.log(numberStorage.getItems());
+
+///////////  Partial type
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  comspleteUntil: Date;
+}
+
+function createCourseGoal(
+  title: string,
+  description: string,
+  date: Date
+): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};  // temporarily sets this variable to be of type Partial - sets all the properties and methods of the CourseGoal interface as optional
+  courseGoal.title = title;
+  courseGoal.description = description;    // Partial gives us the possibility to add properties and methods step by step, i.e. if we have some extra validations
+  courseGoal.comspleteUntil = date;
+  return courseGoal as CourseGoal;  // here we manually change it from Partial type to CourseGoal type
+}
+
+
+/////// Readoly type
+
+const names2: Readonly<string[]> = ["julia", "adam"];
+// names2.push("ktos");  // we can't do it because names2 is of type Readonly

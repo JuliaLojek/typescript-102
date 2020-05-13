@@ -46,6 +46,7 @@ console.log(extractAndConvert({ name: "julia" }, "name"));
 //////// GENERIC CLASSES
 class DataStorage {
     constructor() {
+        // we just say here we want one type of data and we specify it while creating instances
         this.data = [];
     }
     addItem(item) {
@@ -68,4 +69,14 @@ numberStorage.addItem(329);
 numberStorage.addItem(423849);
 numberStorage.removeItem(329);
 console.log(numberStorage.getItems());
+function createCourseGoal(title, description, date) {
+    let courseGoal = {}; // temporarily sets this variable to be of type Partial - sets all the properties and methods of the CourseGoal interface as optional
+    courseGoal.title = title;
+    courseGoal.description = description; // Partial gives us the possibility to add properties and methods step by step, i.e. if we have some extra validations
+    courseGoal.comspleteUntil = date;
+    return courseGoal; // here we manually change it from Partial type to CourseGoal type
+}
+/////// Readoly type
+const names2 = ["julia", "adam"];
+// names2.push("ktos");  // we can't do it because names2 is of type Readonly
 //# sourceMappingURL=app.js.map
