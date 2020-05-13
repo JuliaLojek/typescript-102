@@ -8,7 +8,7 @@ const promise = new Promise((resolve, reject) => {
         resolve("This is resolved!");
     }, 2000);
 });
-///////// generci functions
+///////// generic functions
 function merge(objA, objB) {
     // if we combine objects like that we then couldn't access properties or methods of a merged objects (the result of the function) because it only knows that it's an object but doesn't know it's structure
     return Object.assign(objA, objB);
@@ -22,4 +22,8 @@ function merge2(objA, objB) {
 const mergedObj2 = merge2({ name: "julia" }, { age: 26 });
 const age2 = mergedObj2.age; // now it works
 console.log(age2);
+///////// generic constraints
+function merge3(objA, objB) {
+    return Object.assign(objA, objB);
+}
 //# sourceMappingURL=app.js.map

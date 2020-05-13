@@ -11,7 +11,7 @@ const promise: Promise<string> = new Promise((resolve, reject) => {
   }, 2000);
 });
 
-///////// generci functions
+///////// generic functions
 
 function merge(objA: object, objB: object) {
   // if we combine objects like that we then couldn't access properties or methods of a merged objects (the result of the function) because it only knows that it's an object but doesn't know it's structure
@@ -30,3 +30,10 @@ function merge2<T, U>(objA: T, objB: U) {   // ts understands that this function
 const mergedObj2 = merge2({name: "julia"}, {age: 26});
 const age2 = mergedObj2.age;    // now it works
 console.log(age2);
+
+///////// generic constraints
+
+function merge3<T extends object, U extends object>(objA: T, objB: U) {  // both types T and U must be objects
+  return Object.assign(objA, objB);
+}
+
