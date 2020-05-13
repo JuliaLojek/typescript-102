@@ -67,3 +67,33 @@ function extractAndConvert<T extends object, U extends keyof T>(
 }
 
 console.log(extractAndConvert({ name: "julia" }, "name"));
+
+//////// GENERIC CLASSES
+
+class DataStorage<T extends string | number | boolean> {   // we just say here we want one type of data and we specify it while creating instances
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    this.data.splice(this.data.indexOf(item), 1);  // won't work with removing objects (reference)
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>();
+textStorage.addItem("julia");
+textStorage.addItem("ktos");
+textStorage.removeItem("julia");
+console.log(textStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(329);
+numberStorage.addItem(423849);
+numberStorage.removeItem(329);
+console.log(numberStorage.getItems());
