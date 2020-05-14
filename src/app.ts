@@ -21,7 +21,7 @@ function WithTemplate(template: string, hookId: string) {
   };
 }
 
-// @Logger("Logging - person...")
+@Logger("Logging - person...")
 @WithTemplate("<h3>My person object</h3>", "app")
 class Person {
   name = "julia";
@@ -33,3 +33,32 @@ class Person {
 
 // const person = new Person();
 // console.log(person);
+
+
+/////////////
+
+function Log(target: any, propertyName: string | Symbol) {
+  console.log("Property decorator");
+  console.log(target, propertyName);
+}
+
+class Product {
+  @Log
+  title: string;
+  private _price: number;
+
+  set price(val: number) {
+    if (val > 0) {
+      this._price = val;
+    }
+  }
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this._price = p;
+  }
+
+  getPriceWithTax(tax: number) {
+    return this._price * (1 + tax);
+  }
+}

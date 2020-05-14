@@ -25,7 +25,6 @@ function WithTemplate(template, hookId) {
         }
     };
 }
-// @Logger("Logging - person...")
 let Person = class Person {
     constructor() {
         this.name = "julia";
@@ -33,8 +32,31 @@ let Person = class Person {
     }
 };
 Person = __decorate([
+    Logger("Logging - person..."),
     WithTemplate("<h3>My person object</h3>", "app")
 ], Person);
 // const person = new Person();
 // console.log(person);
+/////////////
+function Log(target, propertyName) {
+    console.log("Property decorator");
+    console.log(target, propertyName);
+}
+class Product {
+    constructor(t, p) {
+        this.title = t;
+        this._price = p;
+    }
+    set price(val) {
+        if (val > 0) {
+            this._price = val;
+        }
+    }
+    getPriceWithTax(tax) {
+        return this._price * (1 + tax);
+    }
+}
+__decorate([
+    Log
+], Product.prototype, "title", void 0);
 //# sourceMappingURL=app.js.map
