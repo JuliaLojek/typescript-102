@@ -13,16 +13,39 @@ function Logger(text: string) {
 }
 
 function WithTemplate(template: string, hookId: string) {
-  return function (_: Function) {
+  console.log("TEMPLATE FACTORY");
+  return function (constructor: any) {
+    console.log("Rendering template");
     const hookEl = document.getElementById(hookId);
+    const p = new constructor();
     if (hookEl) {
       hookEl.innerHTML = template;
+      hookEl.querySelector("h3")!.textContent = p.name;
     }
   };
 }
 
+function WithTemplate2(template: string, hookId: string) {
+  console.log("TEMPLATE FACTORY");
+  return function<T extends {new(...args: any[]): {name: string}}>(originalConstructor: T) {
+    return class extends originalConstructor {
+      // when we return class inside the decorator function this code gets executed when an instance of an object is created
+      constructor(..._: any[]) {
+        super();  // here we save the original class with the original constructor
+        // and here we add new code - new functionality execited when an instance is created
+        console.log("Rendering template");
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector("h3")!.textContent = this.name;
+        }
+      }
+    };
+  };
+}
+
 @Logger("Logging - person...")
-@WithTemplate("<h3>My person object</h3>", "app")
+@WithTemplate2("<h3>My person object</h3>", "app")
 class Person {
   name = "julia";
 
@@ -31,9 +54,8 @@ class Person {
   }
 }
 
-// const person = new Person();
-// console.log(person);
-
+const person = new Person();
+console.log(person);
 
 /////////////
 

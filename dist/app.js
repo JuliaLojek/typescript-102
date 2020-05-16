@@ -21,11 +21,33 @@ function Logger(text) {
     };
 }
 function WithTemplate(template, hookId) {
-    return function (_) {
+    console.log("TEMPLATE FACTORY");
+    return function (constructor) {
+        console.log("Rendering template");
         const hookEl = document.getElementById(hookId);
+        const p = new constructor();
         if (hookEl) {
             hookEl.innerHTML = template;
+            hookEl.querySelector("h3").textContent = p.name;
         }
+    };
+}
+function WithTemplate2(template, hookId) {
+    console.log("TEMPLATE FACTORY");
+    return function (originalConstructor) {
+        return class extends originalConstructor {
+            // when we return class inside the decorator function this code gets executed when an instance of an object is created
+            constructor(..._) {
+                super(); // here we save the original class with the original constructor
+                // and here we add new code - new functionality execited when an instance is created
+                console.log("Rendering template");
+                const hookEl = document.getElementById(hookId);
+                if (hookEl) {
+                    hookEl.innerHTML = template;
+                    hookEl.querySelector("h3").textContent = this.name;
+                }
+            }
+        };
     };
 }
 let Person = class Person {
@@ -36,10 +58,10 @@ let Person = class Person {
 };
 Person = __decorate([
     Logger("Logging - person..."),
-    WithTemplate("<h3>My person object</h3>", "app")
+    WithTemplate2("<h3>My person object</h3>", "app")
 ], Person);
-// const person = new Person();
-// console.log(person);
+const person = new Person();
+console.log(person);
 /////////////
 function Log(target, propertyName) {
     console.log("Property decorator");
