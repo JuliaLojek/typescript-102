@@ -27,11 +27,13 @@ function WithTemplate(template: string, hookId: string) {
 
 function WithTemplate2(template: string, hookId: string) {
   console.log("TEMPLATE FACTORY");
-  return function<T extends {new(...args: any[]): {name: string}}>(originalConstructor: T) {
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
     return class extends originalConstructor {
       // when we return class inside the decorator function this code gets executed when an instance of an object is created
       constructor(..._: any[]) {
-        super();  // here we save the original class with the original constructor
+        super(); // here we save the original class with the original constructor
         // and here we add new code - new functionality execited when an instance is created
         console.log("Rendering template");
         const hookEl = document.getElementById(hookId);
@@ -107,3 +109,33 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+///////////// autobind decorator
+
+function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    enumerable: false,
+    get() {
+      const boundFunction = originalMethod.bind(this);
+      return boundFunction;
+    },
+  };
+  return adjDescriptor;
+}
+
+class Printer {
+  message = "This works!";
+
+  @autobind
+  showMessage() {
+    console.log(this.message);
+  }
+}
+
+const p = new Printer();
+
+const button = document.querySelector("button")!;
+// button.addEventListener("click", p.showMessage.bind(p));  // binding p as this
+button.addEventListener("click", p.showMessage);  // autobinding with a decorator

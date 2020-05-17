@@ -109,4 +109,32 @@ __decorate([
     Log3,
     __param(0, Log4)
 ], Product.prototype, "getPriceWithTax", null);
+///////////// autobind decorator
+function autobind(_, _2, descriptor) {
+    const originalMethod = descriptor.value;
+    const adjDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            const boundFunction = originalMethod.bind(this);
+            return boundFunction;
+        },
+    };
+    return adjDescriptor;
+}
+class Printer {
+    constructor() {
+        this.message = "This works!";
+    }
+    showMessage() {
+        console.log(this.message);
+    }
+}
+__decorate([
+    autobind
+], Printer.prototype, "showMessage", null);
+const p = new Printer();
+const button = document.querySelector("button");
+// button.addEventListener("click", p.showMessage.bind(p));  // binding p as this
+button.addEventListener("click", p.showMessage); // autobinding with a decorator
 //# sourceMappingURL=app.js.map
