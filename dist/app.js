@@ -139,31 +139,30 @@ const button = document.querySelector("button");
 button.addEventListener("click", p.showMessage); // autobinding with a decorator
 const registeredValidators = {};
 function Required(target, propName) {
-    registeredValidators[target.constructor.name] = {
-        [propName]: ["required"]
-    };
+    registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: [/*...registeredValidators[target.constructor.name][propName], */ "required"] });
 }
 function PositiveNumber(target, propName) {
-    registeredValidators[target.constructor.name] = {
-        [propName]: ["positive"]
-    };
+    registeredValidators[target.constructor.name] = Object.assign(Object.assign({}, registeredValidators[target.constructor.name]), { [propName]: [/*...registeredValidators[target.constructor.name][propName], */ "positive"] });
 }
 function validate(obj) {
     const objValidatorConfig = registeredValidators[obj.constructor.name];
     if (!objValidatorConfig) {
         return true;
     }
+    let isValid = true;
     for (const prop in objValidatorConfig) {
         for (const validator of objValidatorConfig[prop]) {
             switch (validator) {
                 case "required":
-                    return !!obj[prop];
+                    isValid = isValid && !!obj[prop];
+                    break;
                 case "positive":
-                    return obj[prop] > 0;
+                    isValid = isValid && obj[prop] > 0;
+                    break;
             }
         }
     }
-    return true;
+    return isValid;
 }
 class Course {
     constructor(t, p) {
