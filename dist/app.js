@@ -137,4 +137,29 @@ const p = new Printer();
 const button = document.querySelector("button");
 // button.addEventListener("click", p.showMessage.bind(p));  // binding p as this
 button.addEventListener("click", p.showMessage); // autobinding with a decorator
+/////////// validation with decorators
+function Required() { }
+function PositiveNumber() { }
+function validate(obj) { }
+class Course {
+    constructor(t, p) {
+        this.title = t;
+        this.price = p;
+    }
+}
+const courseForm = document.querySelector("form");
+courseForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const titleEl = document.getElementById("title");
+    const priceEl = document.getElementById("price");
+    const title = titleEl.value;
+    const price = +priceEl.value;
+    const createdCourse = new Course(title, price);
+    // if (!validate(createdCourse)) {
+    //   return alert("Invalid input, please try again!");
+    // }
+    console.log(createdCourse);
+    titleEl.value = "";
+    priceEl.value = "";
+});
 //# sourceMappingURL=app.js.map
